@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const PostgressConnectionStringParser = require('pg-connection-string');
 const connectionOptions = PostgressConnectionStringParser.parse(process.env.DATABASE_URL);
 const env = process.env.NODE_ENV;
@@ -8,6 +9,19 @@ const configs = {
         host: connectionOptions.host,
         port: connectionOptions.port || 5432,
         database: connectionOptions.database,
+        synchronize: true,
+        logging: false,
+        entities: ['src/domain/entities/**/*.ts'],
+        migrations: ['src/db/migrations/**/*.ts'],
+        cli: {
+            migrationsDir: 'src/db/migrations/'
+        }
+    },
+    test: {
+        type: 'postgres',
+        host: connectionOptions.host,
+        port: connectionOptions.port || 5432,
+        database: `${connectionOptions.database}_test`,
         synchronize: true,
         logging: false,
         entities: ['src/domain/entities/**/*.ts'],
@@ -31,6 +45,5 @@ const configs = {
     }
 };
 
-console.log(`..............Running the ORM with the ${env} config..............`);
-console.log('');
+console.log(`----------------->Running the ORM with the ${chalk.bold.cyan(env)} config`);
 module.exports = configs[env];

@@ -1,6 +1,6 @@
 'use strict';
 
-import { provide } from '../webApi/ioc/ioc';
+import { provide, inject } from '../webApi/ioc/ioc';
 import TYPES from '../webApi/contants/types';
 import { PartnerRepository } from '../db/repositories/Partner';
 import { IPartner } from '../domain/entities/Partner';
@@ -8,7 +8,7 @@ import { PartnerVM } from '../viewModels/PartnerVM';
 
 @provide(TYPES.PartnerService)
 export class PartnerService {
-    private partnerRepository = new PartnerRepository();
+    constructor(@inject(TYPES.PartnerRepository) private partnerRepository = new PartnerRepository()) {}
 
     public async getPartners(): Promise<PartnerVM[]> {
         const result: IPartner[] = await this.partnerRepository.getPartners();

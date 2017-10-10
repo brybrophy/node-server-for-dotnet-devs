@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ silent: true });
 }
 
+import * as chalk from 'chalk';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { InversifyExpressServer } from 'inversify-express-utils';
@@ -22,9 +23,12 @@ import './ioc/loader';
 
 // Create a connection to the ORM.
 // Note that its NOT an active database connection.
+console.log(`----------------->Bootrapping the application`);
+
 createConnection()
     .then(async connection => {
         const server = new InversifyExpressServer(container);
+
         server.setConfig(app => {
             // Remove x-powered-by from headers
             app.disable('x-powered-by');
@@ -63,7 +67,7 @@ createConnection()
         app = server.build();
 
         app.listen(port);
-        console.log(`------------------On PORT ${port}, running the API is...------------------`);
+        console.log(`----------------->On PORT ${chalk.bold.yellow(port)}, running the API is...`);
     })
     .catch(error => console.log('TypeORM connection error: ', error));
 
