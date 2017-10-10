@@ -12,8 +12,9 @@
         "postinstall": "npm run build",
         "start:dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/webApi/server.ts",
         "start:prod": "cross-env NODE_ENV=production node ./dist/webApi/server.js",
-        "test": "mocha -t 5000 --require ts-node/register  --require reflect-metadata/Reflect",
-        "test:all": "cross-env NODE_ENV=test npm test **/*.spec.ts"
+        "start:test": "cross-env NODE_ENV=test node ./dist/webApi/server.js",
+        "test": "cross-env NODE_ENV=test mocha -t 5000 --require ts-node/register  --require reflect-metadata/Reflect",
+        "test:all": "npm test **/*.spec.ts"
     },
     "author": "Bryan Brophy",
     "license": "MIT",

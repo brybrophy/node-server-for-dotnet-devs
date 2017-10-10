@@ -1,12 +1,13 @@
 import { assert } from 'chai';
 import { PartnerController } from '../../webApi/controllers/Partner';
 import { PartnerService } from '../../services/Partner';
+import { PartnerRepository } from '../../db/repositories/Partner';
 
 describe('PartnerController', () => {
     let controller;
 
     beforeEach(() => {
-        controller = new PartnerController(new PartnerService());
+        controller = new PartnerController(new PartnerService(new PartnerRepository()));
     });
 
     it('should get back all partners', done => {

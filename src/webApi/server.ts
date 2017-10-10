@@ -15,7 +15,6 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
 import port from '../utilities/port';
-let app;
 
 // Load all injectable entities.
 // The @provide() annotation will then automatically register them.
@@ -25,7 +24,7 @@ import './ioc/loader';
 // Note that its NOT an active database connection.
 console.log(`----------------->Bootrapping the application`);
 
-createConnection()
+export default createConnection()
     .then(async connection => {
         const server = new InversifyExpressServer(container);
 
@@ -64,11 +63,9 @@ createConnection()
         });
 
         // Start server
-        app = server.build();
+        const app = server.build();
 
         app.listen(port);
         console.log(`----------------->On PORT ${chalk.bold.yellow(port)}, running the API is...`);
     })
     .catch(error => console.log('TypeORM connection error: ', error));
-
-export default app;
