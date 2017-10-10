@@ -1,0 +1,9 @@
+node_modules/
+dist/
+pg
+.env
+pg
+.DS_Store
+npm-debug.log
+coverage/
+.nyc_output/

@@ -1,0 +1,57 @@
+{
+    "name": "high-seas-node-server",
+    "version": "1.0.0",
+    "description": "A node/typescript based server for building MVVM API's",
+    "main": "server.js",
+    "scripts": {
+        "build": "rimraf dist && tsc",
+        "migrations:run": "ts-node ./node_modules/.bin/typeorm migrations:run",
+        "migrations:revert": "ts-node ./node_modules/.bin/typeorm migrations:revert",
+        "postinstall": "npm run build",
+        "start:dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/webApi/server.ts",
+        "start:prod": "cross-env NODE_ENV=production node ./dist/webApi/server.js",
+        "test":
+            "nyc -r=text -i ts-node/register -e .ts mocha -t 5000 --require ts-node/register  --require reflect-metadata/Reflect",
+        "test:all": "npm test **/*.spec.ts"
+    },
+    "author": "Bryan Brophy",
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "boom": "^6.0.0",
+        "compression": "^1.7.1",
+        "cookie-parser": "^1.4.3",
+        "cross-env": "^5.0.5",
+        "dotenv": "^4.0.0",
+        "express": "^4.16.1",
+        "inversify": "^4.3.0",
+        "inversify-binding-decorators": "^3.0.0",
+        "inversify-express-utils": "^4.0.1",
+        "morgan": "^1.9.0",
+        "pg-connection-string": "^2.0.0",
+        "reflect-metadata": "^0.1.10"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.16.5",
+        "@types/boom": "^4.3.7",
+        "@types/chai": "^4.0.4",
+        "@types/compression": "^0.0.34",
+        "@types/cookie-parser": "^1.4.1",
+        "@types/dotenv": "^4.0.1",
+        "@types/express": "^4.0.37",
+        "@types/mocha": "^2.2.43",
+        "@types/morgan": "^1.7.33",
+        "@types/node": "^8.0.33",
+        "chai": "^4.1.2",
+        "mocha": "^4.0.1",
+        "nodemon": "^1.12.1",
+        "nyc": "^11.2.1",
+        "pg": "^7.3.0",
+        "rimraf": "^2.6.2",
+        "supertest": "^3.0.0",
+        "ts-node": "^3.3.0",
+        "typeorm": "^0.1.0",
+        "typescript": "^2.5.3"
+    },
+    "engines": { "node": "8.6.0" }
+}
