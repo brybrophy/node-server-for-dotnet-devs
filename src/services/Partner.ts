@@ -29,7 +29,7 @@ export class PartnerService {
         const result: IPartner = await this.partnerRepository.getPartner(id);
 
         if (!result) {
-            return result;
+            return {};
         }
 
         const partner = new PartnerVM({

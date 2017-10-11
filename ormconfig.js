@@ -7,7 +7,7 @@ const configs = {
     development: {
         type: 'postgres',
         host: connectionOptions.host,
-        port: connectionOptions.port || 5432,
+        port: connectionOptions.port,
         database: connectionOptions.database,
         synchronize: true,
         logging: false,
@@ -20,7 +20,7 @@ const configs = {
     test: {
         type: 'postgres',
         host: connectionOptions.host,
-        port: connectionOptions.port || 5432,
+        port: connectionOptions.port,
         database: `${connectionOptions.database}_test`,
         synchronize: true,
         logging: false,
@@ -33,7 +33,7 @@ const configs = {
     production: {
         type: 'postgres',
         host: connectionOptions.host,
-        port: connectionOptions.port || 5432,
+        port: connectionOptions.port,
         database: connectionOptions.database,
         username: connectionOptions.user,
         password: connectionOptions.password,

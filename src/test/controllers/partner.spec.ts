@@ -51,6 +51,14 @@ describe('PartnerController', () => {
         });
     });
 
+    it('should get back empty object when no partner can be found', done => {
+        controller.getPartner({ params: { id: '100' } }).then(data => {
+            assert.deepEqual(data, {});
+
+            done();
+        });
+    });
+
     it('should add a new partner', done => {
         const newPartner = {
             id: 3,
@@ -90,6 +98,14 @@ describe('PartnerController', () => {
             });
     });
 
+    it('should get back message when no partner can be updated', done => {
+        controller.updatePartner({ params: { id: '100' } }).then(data => {
+            assert.strictEqual(data, 'Partner does not exist, and therefore could not be updated.');
+
+            done();
+        });
+    });
+
     it('should delete an existing partner', done => {
         controller
             .deletePartner({
@@ -100,5 +116,13 @@ describe('PartnerController', () => {
 
                 done();
             });
+    });
+
+    it('should get back message when no partner can be deleted', done => {
+        controller.deletePartner({ params: { id: '100' } }).then(data => {
+            assert.strictEqual(data, 'Partner does not exist, and therefore could not be removed.');
+
+            done();
+        });
     });
 });
