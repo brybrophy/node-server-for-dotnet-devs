@@ -19,7 +19,7 @@ export class PartnerController {
     }
 
     @httpGet('/:id')
-    public getPartner(request: Request): Promise<PartnerVM> {
+    public getPartner(request: Request): Promise<PartnerVM | {}> {
         const id: number = Number.parseInt(request.params.id);
 
         return this.partnerService.getPartner(id);
