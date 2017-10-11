@@ -9,12 +9,15 @@
         "migrations:revert": "ts-node ./node_modules/.bin/typeorm migrations:revert",
         "migrate:up:dev": "cross-env NODE_ENV=development npm run migrations:run",
         "migrate:down:dev": "cross-env NODE_ENV=development npm run migrations:revert",
+        "migrate:up:test": "cross-env NODE_ENV=test npm run migrations:run",
+        "migrate:down:test": "cross-env NODE_ENV=test npm run migrations:revert",
         "postinstall": "npm run build",
         "start:dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/webApi/server.ts",
         "start:prod": "cross-env NODE_ENV=production node ./dist/webApi/server.js",
         "start:test": "cross-env NODE_ENV=test node ./dist/webApi/server.js",
-        "test": "cross-env NODE_ENV=test mocha -t 5000 --require ts-node/register  --require reflect-metadata/Reflect",
-        "test:all": "npm test **/*.spec.ts"
+        "test":
+            "cross-env NODE_ENV=test nyc -r=text -i ts-node/register -e .ts mocha -t 5000 --require ts-node/register  --require reflect-metadata/Reflect",
+        "test:all": "npm run migrate:up:test && npm test **/*.spec.ts && npm run migrate:down:test"
     },
     "author": "Bryan Brophy",
     "license": "MIT",
@@ -48,6 +51,7 @@
         "chai": "^4.1.2",
         "mocha": "^4.0.1",
         "nodemon": "^1.12.1",
+        "nyc": "^11.2.1",
         "pg": "^7.3.0",
         "rimraf": "^2.6.2",
         "supertest": "^3.0.0",

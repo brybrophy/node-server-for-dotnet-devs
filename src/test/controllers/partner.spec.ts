@@ -1,45 +1,54 @@
 import { assert } from 'chai';
+import { Connection, createConnection } from 'typeorm';
 import { PartnerController } from '../../webApi/controllers/Partner';
 import { PartnerService } from '../../services/Partner';
 import { PartnerRepository } from '../../db/repositories/Partner';
 
 describe('PartnerController', () => {
     let controller;
+    let connection: Connection;
 
-    beforeEach(() => {
-        controller = new PartnerController(new PartnerService(new PartnerRepository()));
+    before(async () => {
+        connection = await createConnection();
+        controller = await new PartnerController(new PartnerService(new PartnerRepository()));
+    });
+
+    after(() => {
+        connection.close();
     });
 
     it('should get back all partners', done => {
-        const data = controller.getPartners();
+        controller.getPartners().then(data => {
+            assert.deepEqual(data, [
+                {
+                    id: 1,
+                    name: 'Joe Auer',
+                    role: 'Partner 1',
+                    favoriteThing: 'Arrested Development'
+                },
+                {
+                    id: 2,
+                    name: 'Michael Meyers',
+                    role: 'Partner 2',
+                    favoriteThing: 'Fine Wine'
+                }
+            ]);
 
-        assert.deepEqual(data, [
-            {
+            done();
+        });
+    });
+
+    it('should get back correct partner', done => {
+        controller.getPartner({ params: { id: '1' } }).then(data => {
+            assert.deepEqual(data, {
                 id: 1,
                 name: 'Joe Auer',
                 role: 'Partner 1',
                 favoriteThing: 'Arrested Development'
-            },
-            {
-                id: 2,
-                name: 'Michael Meyers',
-                role: 'Partner 2',
-                favoriteThing: 'Fine Wine'
-            }
-        ]);
-        done();
-    });
+            });
 
-    it('should get back correct partner', done => {
-        const data = controller.getPartner({ params: { id: '1' } });
-
-        assert.deepEqual(data, {
-            id: 1,
-            name: 'Joe Auer',
-            role: 'Partner 1',
-            favoriteThing: 'Arrested Development'
+            done();
         });
-        done();
     });
 
     it('should add a new partner', done => {
@@ -50,37 +59,46 @@ describe('PartnerController', () => {
             favoriteThing: 'Snow Days'
         };
 
-        const data = controller.newPartner({
-            body: newPartner
-        });
+        controller
+            .newPartner({
+                body: newPartner
+            })
+            .then(data => {
+                assert.deepEqual(data, newPartner);
 
-        assert.deepEqual(data, newPartner);
-        done();
+                done();
+            });
     });
 
     it('should update an existing partner', done => {
         const nextPartner = {
-            id: '2',
+            id: 2,
             name: 'Michael "The Bavarian" Meyers',
             role: 'Partner 2',
             favoriteThing: 'Ein Prosit der Gemütlichkeit'
         };
 
-        const data = controller.updatePartner({
-            body: nextPartner,
-            params: { id: 2 }
-        });
+        controller
+            .updatePartner({
+                body: nextPartner,
+                params: { id: 2 }
+            })
+            .then(data => {
+                assert.deepEqual(data, nextPartner);
 
-        assert.deepEqual(data, nextPartner);
-        done();
+                done();
+            });
     });
 
     it('should delete an existing partner', done => {
-        const data = controller.deletePartner({
-            params: { id: 2 }
-        });
+        controller
+            .deletePartner({
+                params: { id: 3 }
+            })
+            .then(data => {
+                assert.strictEqual(data, 'Partner Successfully Removed');
 
-        assert.strictEqual(data, 2);
-        done();
+                done();
+            });
     });
 });
