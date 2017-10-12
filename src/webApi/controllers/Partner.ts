@@ -11,36 +11,36 @@ import TAGS from '../contants/tags';
 @provideNamed(TYPE.Controller, TAGS.PartnerController)
 @controller('/api/partners')
 export class PartnerController {
-    constructor(@inject(TYPES.PartnerService) private partnerService: PartnerService) {}
+    constructor(@inject(TYPES.PartnerService) private _partnerService: PartnerService) {}
 
     @httpGet('/')
     public getPartners(): Promise<PartnerVM[]> {
-        return this.partnerService.getPartners();
+        return this._partnerService.getPartners();
     }
 
     @httpGet('/:id')
     public getPartner(request: Request): Promise<PartnerVM | {}> {
         const id: number = Number.parseInt(request.params.id);
 
-        return this.partnerService.getPartner(id);
+        return this._partnerService.getPartner(id);
     }
 
     @httpPost('/')
     public newPartner(request: Request): Promise<PartnerVM> {
-        return this.partnerService.newPartner(request.body);
+        return this._partnerService.newPartner(request.body);
     }
 
     @httpPut('/:id')
     public updatePartner(request: Request): Promise<PartnerVM | string> {
         const id: number = Number.parseInt(request.params.id);
 
-        return this.partnerService.updatePartner(id, request.body);
+        return this._partnerService.updatePartner(id, request.body);
     }
 
     @httpDelete('/:id')
     public deletePartner(request: Request): Promise<string> {
         const id: number = Number.parseInt(request.params.id);
 
-        return this.partnerService.deletePartner(id);
+        return this._partnerService.deletePartner(id);
     }
 }

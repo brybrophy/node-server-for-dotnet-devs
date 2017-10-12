@@ -8,10 +8,10 @@ import { PartnerVM } from '../viewModels/PartnerVM';
 
 @provide(TYPES.PartnerService)
 export class PartnerService {
-    constructor(@inject(TYPES.PartnerRepository) private partnerRepository = new PartnerRepository()) {}
+    constructor(@inject(TYPES.PartnerRepository) private _partnerRepository = new PartnerRepository()) {}
 
     public async getPartners(): Promise<PartnerVM[]> {
-        const result: IPartner[] = await this.partnerRepository.getPartners();
+        const result: IPartner[] = await this._partnerRepository.getPartners();
 
         const partners: PartnerVM[] = result.map(partner => {
             return new PartnerVM({
@@ -26,7 +26,7 @@ export class PartnerService {
     }
 
     public async getPartner(id: number) {
-        const result: IPartner = await this.partnerRepository.getPartner(id);
+        const result: IPartner = await this._partnerRepository.getPartner(id);
 
         if (!result) {
             return {};
@@ -43,7 +43,7 @@ export class PartnerService {
     }
 
     public async newPartner(newPartner: PartnerVM) {
-        const result: IPartner = await this.partnerRepository.createPartner(newPartner);
+        const result: IPartner = await this._partnerRepository.createPartner(newPartner);
 
         const partner = new PartnerVM({
             id: result.id,
@@ -56,7 +56,7 @@ export class PartnerService {
     }
 
     public async updatePartner(id: number, nextPartner: PartnerVM): Promise<IPartner | string> {
-        const result: IPartner | string = await this.partnerRepository.updatePartner(id, nextPartner);
+        const result: IPartner | string = await this._partnerRepository.updatePartner(id, nextPartner);
 
         if (typeof result === 'string') {
             return result;
@@ -73,7 +73,7 @@ export class PartnerService {
     }
 
     public async deletePartner(id: number) {
-        const successMessage: string = await this.partnerRepository.deletePartner(id);
+        const successMessage: string = await this._partnerRepository.deletePartner(id);
 
         return successMessage;
     }
