@@ -6,13 +6,16 @@ import { PartnerRepository } from '../db/repositories/Partner';
 import { IPartner } from '../domain/entities/Partner';
 import { PartnerVM } from '../viewModels/PartnerVM';
 
+// This decorator will register the service as an injectable dependancy.
 @provide(TYPES.PartnerService)
 export class PartnerService {
+    // Inject the partner repository into the service.
     constructor(@inject(TYPES.PartnerRepository) private _partnerRepository = new PartnerRepository()) {}
 
     public async getPartners(): Promise<PartnerVM[]> {
         const result: IPartner[] = await this._partnerRepository.getPartners();
 
+        // Map database result to new view model and return that to the controller.
         const partners: PartnerVM[] = result.map(partner => {
             return new PartnerVM({
                 id: partner.id,

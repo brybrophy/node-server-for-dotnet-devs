@@ -16,8 +16,8 @@ import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
 import port from '../utilities/port';
 
-// Load all injectable entities.
-// The @provide() annotation will then automatically register them.
+// Load all injectable classes.
+// Decorate any class with @provide() of @provideNamed to register them.
 import './ioc/loader';
 
 // Create a connection to the ORM.
@@ -62,7 +62,8 @@ export default createConnection()
             });
         });
 
-        // Start server
+        // Start server. Note: If starting in development, nodemon will watch the app and automatically restart
+        // after making any changes.
         const app = server.build();
 
         app.listen(port);

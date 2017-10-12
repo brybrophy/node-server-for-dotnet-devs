@@ -5,8 +5,12 @@ import { IPartner } from '../../domain/entities/Partner';
 import { provide } from '../../webApi/ioc/ioc';
 import TYPES from '../../webApi/contants/types';
 
+// This decorator will register the repository as an injectable dependancy.
 @provide(TYPES.PartnerRepository)
 export class PartnerRepository {
+    // Get the repository for the provided entity from the orm. The repository
+    // contains all of the orm methods for that entity.
+    // Methods can be found at https://github.com/typeorm/typeorm/blob/master/docs/repository-api.md
     private _partnerRepository = getManager().getRepository(IPartner);
 
     public async getPartners(): Promise<IPartner[]> {

@@ -2,6 +2,7 @@
 
 import * as morgan from 'morgan';
 
+// Use differrent levels of logging based on the environemt.
 export function enableLogging(app) {
     switch (app.get('env')) {
         case 'development':

@@ -3,6 +3,11 @@ const PostgressConnectionStringParser = require('pg-connection-string');
 const connectionOptions = PostgressConnectionStringParser.parse(process.env.DATABASE_URL);
 const env = process.env.NODE_ENV;
 
+// Create the orm config based on the enviroment.
+// Development and Test will point to the .ts files in /src.
+// Production will point to .js files in /dist/
+// Connection options are parsed from DATABASE_URL in .env,
+// or in the environment variables on Heroku.
 const configs = {
     development: {
         type: 'postgres',
