@@ -14,6 +14,7 @@ Documentation is in progress, but every file should have comments to help explai
 - Run `createdb highseas`.
 - Run `createdb highseas_test`.
 - Run `echo "DATABASE_URL=postgres://localhost:5432/highseas" > .env`.
+- Run `npm run migrate:up:dev`.
 
 ### To start the app in development:
 
@@ -26,3 +27,6 @@ Documentation is in progress, but every file should have comments to help explai
 ### To manually test the app:
 
 Because of the CSRF protection setup in the server, you must set `Content-Type: application/json` in the request headers. Otherwise, you will get a `406 not acceptable` error. You can do this by using Postman to manually test the endpoints.
+
+A working example of the api is running at `http://high-seas-typescript-api.herokuapp.com/api/partners`;
+Head over and try it out in Postman!
