@@ -1,5 +1,5 @@
 {
-    "name": "high-seas-node-server",
+    "name": "node-server-for-dotnet-devs",
     "version": "1.0.0",
     "description": "A node/typescript based server for building MVVM API's",
     "main": "server.js",
